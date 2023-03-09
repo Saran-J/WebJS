@@ -1,19 +1,31 @@
 <body>
-    <input type="button" value="Close2" id="CloseButton" style="height:50px; width:100px">
+    <input type="button" value="Close1" id="CloseButton" style="height:50px; width:100px">
+    <BR>
+    <BR>
+    <input type="button" value="Close2" id="CloseButton2" style="height:50px; width:100px">
+    <BR>
+    <BR>
+    <input type="button" value="Close3" id="CloseButton3" style="height:50px; width:100px">
     <BR>
     <BR>
     <label id="token">
         Token will be update here 2
     </label>
     <BR>
-    <label id="token2">
-        finish token5
-    </label>
+    <BR>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
             $('#CloseButton').click(function () {
                 closeWebview();
+            });
+
+            $('#CloseButton2').click(function () {
+                closeWebview2();
+            });
+
+            $('#CloseButton3').click(function () {
+                closeWebview3();
             });
         });
 
@@ -22,6 +34,16 @@
             var command = { 'command': 'closeWebView' };
             var result = JSON.stringify(command);
             window.webkit.messageHandlers.observer.postMessage(command);
+        }
+
+        function closeWebview2() {
+            var command = { 'command': 'closeWebView' };
+            var result = JSON.stringify(command);
+            window.webkit.messageHandlers.observer.postMessage(result);
+        }
+
+        function closeWebview3() {
+            window.webkit.messageHandlers.observer.postMessage("{\"command\": \"closeWebView\" }");
         }
 
         function onReceiveNativeCommand(command, value) {
