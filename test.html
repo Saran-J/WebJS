@@ -25,16 +25,6 @@
             });
         }
 
-        function closeWebview2() {
-            var command = { 'command': 'closeWebView' };
-            var result = JSON.stringify(command);
-            window.webkit.messageHandlers.observer.postMessage(result);
-        }
-
-        function closeWebview3() {
-            window.webkit.messageHandlers.observer.postMessage("{\"command\": \"closeWebView\" }");
-        }
-
         function onReceiveNativeCommand(command, value) {
             document.getElementById('token').innerHTML
                 = value;
