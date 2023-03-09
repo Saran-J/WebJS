@@ -19,7 +19,9 @@
 
         function closeWebview() {
             console.log("close webview");
-            window.webkit.messageHandlers.observer.postMessage("{'command': 'closeWebview'}");
+            var command = { 'command': 'closeWebview' };
+            var result = JSON.stringify(command);
+            window.webkit.messageHandlers.observer.postMessage(result);
         }
 
         function onReceiveNativeCommand(command, value) {
