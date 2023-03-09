@@ -7,7 +7,7 @@
     </label>
     <BR>
     <label id="token2">
-        finish token
+        finish token2
     </label>
     <script src="http://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script>
@@ -18,7 +18,7 @@
         });
 
         function closeWebview() {
-            console.log("close webview")
+            console.log("close webview");
             window.webkit.messageHandlers.observer.postMessage("{'command': 'closeWebview'}");
         }
 
