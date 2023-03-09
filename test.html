@@ -14,12 +14,12 @@
         });
 
         function closeWebview() {
-            window.webkit.messageHandlers.jsMessageHandler.postMessage("closeWebview");
+            window.webkit.messageHandlers.jsMessageHandler.postMessage("{\"command\": \"closeWebview\"}");
         }
 
-        function updateToken(newToken) {
+        function onReceiveNativeCommand(command, value) {
             document.getElementById('token').innerHTML
-                = newToken;
+                = value;
         }
     </script>
 </body>
