@@ -20,6 +20,9 @@
             var command = { 'command': 'closeWebView' };
             var result = JSON.stringify(command);
             window.webkit.messageHandlers.observer.postMessage(command);
+            windows.JSBridge.onReceiveJSCommand?.({
+                command: 'closeWebview',
+            });
         }
 
         function closeWebview2() {
