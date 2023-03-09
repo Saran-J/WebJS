@@ -14,7 +14,8 @@
         });
 
         function closeWebview() {
-            window.webkit.messageHandlers.jsMessageHandler.postMessage("{\"command\": \"closeWebview\"}");
+            console.log("close webview")
+            window.webkit.messageHandlers.observer.postMessage("{'command': 'closeWebview'}");
         }
 
         function onReceiveNativeCommand(command, value) {
