@@ -19,7 +19,7 @@
 
         function closeWebview() {
             console.log("close webview");
-            var command = { 'command': 'closeWebview' };
+            var command = { 'command': 'closeWebView' };
             var result = JSON.stringify(command);
             window.webkit.messageHandlers.observer.postMessage(result);
         }
