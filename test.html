@@ -3,21 +3,46 @@
 div {text-align: center;}
 </style>
     <div>
+    <BR><BR><BR><BR><BR><BR>
     <h1><label id="result">
         Result will be update here
     </label></h1>
     <BR>
-    <input type="button" value="Email Validate" id="emailValidate" style="height:50px; width:300px">
+    <input type="button" value="internalPartnerPinVerify" id="internalPartnerPinVerify" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
-    <input type="button" value="DGL04 Entry" id="dgl04" style="height:50px; width:300px">
+    <input type="button" value="closeWebview" id="closeWebview" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
-    <input type="button" value="DGL03 Entry" id="dgl03" style="height:50px; width:300px">
+    <input type="button" value="openESavingAccount" id="openESavingAccount" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
-    <input type="button" value="DGL01 Entry" id="dgl01" style="height:50px; width:300px">
+    <input type="button" value="openCasaHome" id="openCasaHome" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
-    <input type="button" value="ValidatePin" id="validatePin" style="height:50px; width:300px">
+    <input type="button" value="openESavingHome" id="openESavingHome" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
-    <input type="button" value="Close" id="CloseButton" style="height:50px; width:300px">
+    <input type="button" value="openKTBLoanAccount" id="openKTBLoanAccount" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openFollowup" id="openFollowup" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="requestCamera" id="requestCamera" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="requestGallery" id="requestGallery" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openLFMProductionHighlight" id="openLFMProductionHighlight" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openLFMProductionShelf" id="openLFMProductionShelf" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openEmailVerification" id="openEmailVerification" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openEmailEdit" id="openEmailEdit" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="checkEmailConfirmation" id="checkEmailConfirmation" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="openLFMProductionStatusPage" id="openLFMProductionStatusPage" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="analyticTracking" id="analyticTracking" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="autoSaveImage" id="autoSaveImage" style="height:50px; width:300px; font-size: larger">
+    <BR><BR>
+    <input type="button" value="saveAndShareImage" id="saveAndShareImage" style="height:50px; width:300px; font-size: larger">
     <BR><BR>
     <BR>
         </div>
@@ -25,34 +50,95 @@ div {text-align: center;}
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.7.1/jquery.min.js" type="text/javascript"></script>
     <script>
         $(document).ready(function () {
-            $('#CloseButton').click(function () {
+            $('#internalPartnerPinVerify').click(function () {
+                var ref = makeRef(8)
+                var command = { 'command': 'internalPartnerPinVerify', 'partnerReqId': ref };
+                sentToNative(command)
+            });
+
+            $('#closeWebview').click(function () {
                 var command = { 'command': 'closeWebview' };
                 sentToNative(command)
             });
 
-            $('#emailValidate').click(function () {
-                var command = { 'command': 'openEmailVerification' };
-                sentToNative(command)
-            });
-
-            $('#dgl04').click(function () {
-                var command = { 'command': 'openKTBLoanAccount' };
-                sentToNative(command)
-            });
-
-            $('#dgl03').click(function () {
-                var command = { 'command': 'openLFMProductionHighlight' };
-                sentToNative(command)
-            });
-
-            $('#dgl01').click(function () {
+            $('#openESavingAccount').click(function () {
                 var command = { 'command': 'openESavingAccount' };
                 sentToNative(command)
             });
 
-            $('#validatePin').click(function () {
-                var ref = makeRef(8)
-                var command = { 'command': 'internalPartnerPinVerify', 'partnerReqId': ref };
+            $('#openCasaHome').click(function () {
+                var command = { 'command': 'openCasaHome' };
+                sentToNative(command)
+            });
+
+            $('#openESavingHome').click(function () {
+                var command = { 'command': 'openESavingHome' };
+                sentToNative(command)
+            });
+
+            $('#openKTBLoanAccount').click(function () {
+                var command = { 'command': 'openKTBLoanAccount' };
+                sentToNative(command)
+            });
+
+            $('#openFollowup').click(function () {
+                var command = { 'command': 'openFollowup' };
+                sentToNative(command)
+            });
+
+            $('#requestCamera').click(function () {
+                var command = { 'command': 'requestCamera' };
+                sentToNative(command)
+            });
+
+            $('#requestGallery').click(function () {
+                var command = { 'command': 'requestGallery' };
+                sentToNative(command)
+            });
+
+            $('#openLFMProductionHighlight').click(function () {
+                var command = { 'command': 'openLFMProductionHighlight' };
+                sentToNative(command)
+            });
+
+            $('#openLFMProductionShelf').click(function () {
+                var command = { 'command': 'openLFMProductionShelf' };
+                sentToNative(command)
+            });
+
+            $('#openEmailVerification').click(function () {
+                var command = { 'command': 'openEmailVerification' };
+                sentToNative(command)
+            });
+
+            $('#openEmailEdit').click(function () {
+                var command = { 'command': 'openEmailEdit' };
+                sentToNative(command)
+            });
+
+            $('#checkEmailConfirmation').click(function () {
+                var command = { 'command': 'checkEmailConfirmation' };
+                sentToNative(command)
+            });
+
+            $('#openLFMProductionStatusPage').click(function () {
+                var command = { 'command': 'openLFMProductionStatusPage' };
+                sentToNative(command)
+            });
+
+            $('#analyticTracking').click(function () {
+                var data = '{"event":{"action":"","category":"KTBLoanHome","label":""},"firebaseParam":[{"key":"pt_information","value":"GuestFlag:Y"}]}'
+                var command = { 'command': 'analyticTracking', 'data': data };
+                sentToNative(command)
+            });
+
+            $('#autoSaveImage').click(function () {
+                var command = { 'command': 'autoSaveImage', 'base64Str': imageBase64Str() };
+                sentToNative(command)
+            });
+
+            $('#saveAndShareImage').click(function () {
+                var command = { 'command': 'saveAndShareImage', 'base64Str': imageBase64Str() };
                 sentToNative(command)
             });
         });
@@ -73,6 +159,11 @@ div {text-align: center;}
             return result;
         }
 
+        function imageBase64Str() {
+            let base64Str = 'data:image/jpg;base64,/9j/4AAQSkZJRgABAQAAAQABAAD/4gIoSUNDX1BST0ZJTEUAAQEAAAIYAAAAAAIQAABtbnRyUkdCIFhZWiAAAAAAAAAAAAAAAABhY3NwAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAQAA9tYAAQAAAADTLQAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAlkZXNjAAAA8AAAAHRyWFlaAAABZAAAABRnWFlaAAABeAAAABRiWFlaAAABjAAAABRyVFJDAAABoAAAAChnVFJDAAABoAAAAChiVFJDAAABoAAAACh3dHB0AAAByAAAABRjcHJ0AAAB3AAAADxtbHVjAAAAAAAAAAEAAAAMZW5VUwAAAFgAAAAcAHMAUgBHAEIAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAFhZWiAAAAAAAABvogAAOPUAAAOQWFlaIAAAAAAAAGKZAAC3hQAAGNpYWVogAAAAAAAAJKAAAA+EAAC2z3BhcmEAAAAAAAQAAAACZmYAAPKnAAANWQAAE9AAAApbAAAAAAAAAABYWVogAAAAAAAA9tYAAQAAAADTLW1sdWMAAAAAAAAAAQAAAAxlblVTAAAAIAAAABwARwBvAG8AZwBsAGUAIABJAG4AYwAuACAAMgAwADEANv/bAEMACgcHCAcGCggICAsKCgsOGBAODQ0OHRUWERgjHyUkIh8iISYrNy8mKTQpISIwQTE0OTs+Pj4lLkRJQzxINz0+O//bAEMBCgsLDg0OHBAQHDsoIig7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7Ozs7O//AABEIABgAGAMBIgACEQEDEQH/xAAXAAEBAQEAAAAAAAAAAAAAAAAABQYD/8QAKBAAAAQFBAIBBQAAAAAAAAAAAQIDEQAEBQYxEhMhQRQVFlJxcqHR/8QAFwEAAwEAAAAAAAAAAAAAAAAAAwQFBv/EABwRAAIDAQEBAQAAAAAAAAAAAAECAAMRBCEFQf/aAAwDAQACEQMRAD8AkUW26VLS0rNFltawpFPuHERfUDu2O+OI1W2b0LbZdve+kMN/YqKJUklFQmlgAksmgTSpy4FYALjPUcvf294ez5yW1p06WF2+zPECztD5inwzRrbWqgAZMNWrbpUzKzU0aW0LAkY+4QRBtIO7Y654hG+TSpJ6KvNoAB5ZRA+pQXcSsIGzjuEGX6G7imAvNTNoUTCWPfFOmKOW3rgUAgAXbSWU4IYnRTD0IdDjgIt/DaO/le6L4b51Fx+bt+oQgXdUKrNTzYnQxdffyRL4vinS9HNb1vqAcBLtqrJi5Ck7KUexHsccjCEIsc1CV14BFLbGLT//2Q=='
+            return base64Str
+        }
+
         // function closeWebview() {
         //     console.log("close webview");
         //     var command = { 'command': 'closeWebView' };
@@ -81,8 +172,7 @@ div {text-align: center;}
         // }
 
         function onReceiveNativeCommand(command, value) {
-            document.getElementById('result').innerHTML
-                = value;
+            document.getElementById('result').innerHTML = command + ' : ' + value;
         }
     </script>
    
