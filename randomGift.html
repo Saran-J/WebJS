@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Gift Matching</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background-color: #f7f7f7;
+      margin: 0;
+      padding: 0;
+    }
+    .hidden {
+      display: none;
+    }
+    .container {
+      max-width: 600px;
+      margin: 20px auto;
+      padding: 20px;
+      background: #fff;
+      border-radius: 8px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      text-align: center;
+    }
+    button {
+      margin: 10px 0;
+      padding: 10px 20px;
+      background: #4caf50;
+      color: white;
+      border: none;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #45a049;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 20px 0;
+    }
+    table, th, td {
+      border: 1px solid #ddd;
+    }
+    th, td {
+      padding: 10px;
+      text-align: center;
+    }
+    th {
+      background-color: #4caf50;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <!-- Login Section -->
+    <div id="loginSection">
+      <h2>Login</h2>
+      <input type="text" id="userId" placeholder="Enter your unique ID">
+      <button onclick="addData()">Login</button>
+    </div>
+
+    <!-- Detail Section -->
+    <div id="detailSection" class="hidden">
+      <h2>Your Secret Pair</h2>
+      <p id="pairDetail"></p>
+      <button onclick="logout()">Logout</button>
+    </div>
+
+    <!-- Overall Section -->
+    <div id="overallSection" class="hidden">
+      <h2>Overall Gift Pairing</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>User</th>
+            <th>Buys Gift For</th>
+          </tr>
+        </thead>
+        <tbody id="overallTable"></tbody>
+      </table>
+      <button onclick="logout()">Logout</button>
+    </div>
+  </div>
+
+ <!--  <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js"></script> -->
+
+
+  <script type="module">
+  // Import the functions you need from the SDKs you need
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_pagwAmE5zuBGRUWM3mwDwi-s_lvcvyE",
+      authDomain: "whattodo-60690.firebaseapp.com",
+      databaseURL: "https://whattodo-60690.firebaseio.com",
+      projectId: "whattodo-60690",
+      storageBucket: "whattodo-60690.firebasestorage.app",
+      messagingSenderId: "1080705771713",
+      appId: "1:1080705771713:web:531944af103b0b7f974c40"
+    };
+
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    async function addData() {
+      try {
+        const docRef = await addDoc(collection(db, "randomGift"), {
+          id: "001",
+          pairing: "002",
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
+    }
+
+    window.addData = addData
+  </script>
+
+  <!-- <script>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_pagwAmE5zuBGRUWM3mwDwi-s_lvcvyE",
+      authDomain: "whattodo-60690.firebaseapp.com",
+      databaseURL: "https://whattodo-60690.firebaseio.com",
+      projectId: "whattodo-60690",
+      storageBucket: "whattodo-60690.firebasestorage.app",
+      messagingSenderId: "1080705771713",
+      appId: "1:1080705771713:web:531944af103b0b7f974c40"
+    };
+
+    const app = firebase.initializeApp(firebaseConfig);
+    const db = firebase.firestore();
+
+    
+  </script> -->
+
+  <script>
+
+    
+    
+
+    // Login function
+    function login() {
+      const userId = document.getElementById("userId").value;
+      if (!userId) {
+        alert("Please enter your unique ID");
+        return;
+      }
+      localStorage.setItem("userId", userId);
+
+      if (mockData[userId]) {
+        showSection("detailSection");
+        document.getElementById("pairDetail").innerText = `You are buying a gift for: ${mockData[userId].pair}`;
+      } else {
+        alert("No pair found for this ID");
+        showSection("loginSection");
+      }
+    }
+
+    // Show a specific section
+    function showSection(sectionId) {
+      document.getElementById("loginSection").classList.add("hidden");
+      document.getElementById("detailSection").classList.add("hidden");
+      document.getElementById("overallSection").classList.add("hidden");
+
+      document.getElementById(sectionId).classList.remove("hidden");
+
+      if (sectionId === "overallSection") loadOverallTable();
+    }
+
+    // Load overall table data
+    function loadOverallTable() {
+      const tableBody = document.getElementById("overallTable");
+      tableBody.innerHTML = ""; // Clear existing rows
+      Object.values(mockData).forEach((item) => {
+        const row = `<tr><td>${item.name}</td><td>${item.pair}</td></tr>`;
+        tableBody.innerHTML += row;
+      });
+    }
+
+    // Logout function
+    function logout() {
+      localStorage.removeItem("userId");
+      showSection("loginSection");
+    }
+
+    // Auto login if user is already logged in
+    const savedUserId = localStorage.getItem("userId");
+    if (savedUserId && mockData[savedUserId]) {
+      showSection("detailSection");
+      document.getElementById("pairDetail").innerText = `You are buying a gift for: ${mockData[savedUserId].pair}`;
+    } else {
+      showSection("loginSection");
+    }
+  </script>
+</body>
+</html>
