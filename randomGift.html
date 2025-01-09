@@ -56,7 +56,7 @@
   <div class="container">
     <!-- Login Section -->
     <div id="loginSection">
-      <h2>Login</h2>
+      <h2>Login2</h2>
       <input type="text" id="userId" placeholder="Enter your unique ID">
       <button onclick="addData()">Login</button>
     </div>
@@ -109,11 +109,7 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-
-
-
-    async function addData() {
-      var employee = [
+    const employee = [
           {
             "Name": "Wipaporn",
             "NickName": "Tangsaksomwang",
@@ -485,19 +481,25 @@
             "Target": "Krissana Thephatsadin Na Ayuthaya (Crok)  Team: G Wallet (SQ Lead)"
           }
         ]
+
+
+    async function addData() {
       employee.forEach( obj => {
-        console.log(obj.Name, obj.NickName, obj.Target)
+        add(obj.Name, obj.NickName, obj.Target)
       })
-      // try {
-      //   const docRef = await addDoc(collection(db, "randomGift"), {
-      //     Name: name,
-      //     Nickname: nickname,
-      //     Target: target
-      //   });
-      //   console.log("Document written with ID: ", docRef.id);
-      // } catch (e) {
-      //   console.error("Error adding document: ", e);
-      // }
+    }
+
+    async function add(name,nickname,target) {
+      try {
+        const docRef = await addDoc(collection(db, "randomGift"), {
+          Name: name,
+          Nickname: nickname,
+          Target: target
+        });
+        console.log("Document written with ID: ", docRef.id);
+      } catch (e) {
+        console.error("Error adding document: ", e);
+      }
     }
 
     window.addData = addData
