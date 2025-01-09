@@ -68,7 +68,14 @@
       font-size: 18px;
       margin-bottom: 16px;
       text-align: center;
-      color: #838383;
+      color: #ffffff;
+    }
+
+    .result {
+      font-size: 18px;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #ffffff;
     }
 
     input[type="text"] {
@@ -80,11 +87,11 @@
       font-size: 16px;
     }
 
-    button {
+    #searchBtn {
       padding: 10px 15px;
       margin: 5px;
       width: 50%;
-      background: linear-gradient(90deg, #2b77ff, #2b77ff);
+      background: #4d61f6;
       color: white;
       border: none;
       border-radius: 5px;
@@ -92,8 +99,21 @@
       cursor: pointer;
     }
 
+    #clearBtn {
+      padding: 10px 15px;
+      margin: 5px;
+      width: 50%;
+      background: #ffffff;
+      color: #4d61f6;
+      border-width: 2px;
+      border-radius: 5px;
+      border-color: #4d61f6;
+      font-size: 16px;
+      cursor: pointer;
+    }
+
     button:hover {
-      background-color: #555;
+      background-color: #4d61f6;
     }
 
     #searchLoading {
@@ -107,8 +127,9 @@
     #searchResult {
       margin-top: 20px;
       padding: 10px;
-      background-color: #f4f4f4;
+      background-color: #4d61f6;
       border-radius: 5px;
+      color: #ffffff;
       word-wrap: break-word;
     }
 
@@ -219,7 +240,7 @@
   
     <div class="container">
       <header>
-        <h1>Enter your name to check</h1>
+        <h1>Enter your name to find your gift buddy!</h1>
       </header>
       
       <!-- Search Section -->
@@ -230,7 +251,7 @@
   
       
       <div hidden id="searchLoading">
-        <h3>Result</h3>
+        <h3>Looking for recipient</h3>
         <div id="skeleton" class="skeleton"></div>
       <div id="skeleton2" class="skeleton" style="width: 60%; margin-top: 10px;"></div>
       <div id="skeleton3" class="skeleton" style="width: 80%; margin-top: 10px;"></div>
@@ -284,13 +305,21 @@
           const snapshot = await getDocs(q)
           userList = snapshot.docs.map(doc => doc.data())
           console.log(userList)
-          searchResult.hidden = false
-          searchLoading.hidden = true
-          var result = userList[0].Target
-          var replace = result.replace("Team", "<BR>Team")
-          searchResult.innerHTML = "<p> Your target is <BR>"+replace+"</p>"
+          if (userList.length == 0) {
+            searchResult.hidden = false
+            searchLoading.hidden = true
+            searchResult.innerHTML = "<p>404 Not Found, Please enter the correct name</p>";
+          } else {
+            searchResult.hidden = false
+            searchLoading.hidden = true
+            var result = userList[0].Target
+            var replace = result.replace("Team", "<BR>Team")
+            searchResult.innerHTML = "<p> The recipient of your gift is: <BR><h1 class=\"result\">"+replace+"</h1></p>"
+          }
+         
         } else {
-          searchResult.innerHTML = "<p>Please enter a search term.</p>";
+          searchResult.hidden = false
+          searchResult.innerHTML = "<p>Please enter a your name.</p>";
         }
       }
 
@@ -331,7 +360,8 @@
         searchLoading.hidden = false
         searchValue(searchTerm)
       } else {
-        searchResult.innerHTML = "<p>Please enter a search term.</p>";
+        searchResult.hidden = false
+          searchResult.innerHTML = "<p>Please enter a your name.</p>";
       }
     });
 
