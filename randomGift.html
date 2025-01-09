@@ -3,93 +3,135 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Gift Matching</title>
+  <title>Search Website</title>
   <style>
-    body {
-      font-family: Arial, sans-serif;
-      background-color: #f7f7f7;
+    /* Basic Styling */
+    * {
       margin: 0;
       padding: 0;
+      box-sizing: border-box;
     }
-    .hidden {
-      display: none;
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
     }
-    .container {
-      max-width: 600px;
-      margin: 20px auto;
-      padding: 20px;
-      background: #fff;
-      border-radius: 8px;
-      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+
+    header {
+      background: #333;
+      color: white;
+      padding: 10px 0;
       text-align: center;
     }
-    button {
-      margin: 10px 0;
-      padding: 10px 20px;
-      background: #4caf50;
+
+    nav ul {
+      list-style-type: none;
+    }
+
+    nav ul li {
+      display: inline;
+      margin: 0 20px;
+    }
+
+    nav ul li a {
       color: white;
-      border: none;
-      cursor: pointer;
+      text-decoration: none;
     }
-    button:hover {
-      background: #45a049;
-    }
-    table {
-      width: 100%;
-      border-collapse: collapse;
+
+    section {
+      padding: 20px;
       margin: 20px 0;
     }
-    table, th, td {
-      border: 1px solid #ddd;
+
+    #home {
+      background-color: #f4f4f4;
     }
-    th, td {
+
+    input[type="text"] {
       padding: 10px;
-      text-align: center;
+      margin: 10px;
     }
-    th {
-      background-color: #4caf50;
-      color: white;
+
+    button {
+      padding: 10px 15px;
+      margin: 5px;
+    }
+
+    #searchResult {
+      margin-top: 20px;
+      background-color: #e0e0e0;
+      padding: 10px;
     }
   </style>
 </head>
 <body>
-  <div class="container">
-    <!-- Login Section -->
-    <div id="loginSection">
-      <h2>Login2</h2>
-      <input type="text" id="userId" placeholder="Enter your unique ID">
-      <button onclick="addData()">Login</button>
-    </div>
+  <header>
+    <nav>
+      <ul>
+        <li><a href="#home">Home</a></li>
+      </ul>
+    </nav>
+  </header>
 
-    <!-- Detail Section -->
-    <div id="detailSection" class="hidden">
-      <h2>Your Secret Pair</h2>
-      <p id="pairDetail"></p>
-      <button onclick="logout()">Logout</button>
-    </div>
+  
 
-    <!-- Overall Section -->
-    <div id="overallSection" class="hidden">
-      <h2>Overall Gift Pairing</h2>
-      <table>
-        <thead>
-          <tr>
-            <th>User</th>
-            <th>Buys Gift For</th>
-          </tr>
-        </thead>
-        <tbody id="overallTable"></tbody>
-      </table>
-      <button onclick="logout()">Logout</button>
-    </div>
-  </div>
+  <section id="home">
+    <h1>Search Data from Firebase</h1>
+    
+    <!-- Search Section -->
+    <input type="text" id="searchInput" placeholder="Enter search term..." />
+    <button id="searchBtn">Search</button>
+    <button id="clearBtn">Clear</button>
 
- <!--  <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js"></script> -->
+    <h3>Search Result:</h3>
+    <div id="searchResult"></div>
+  </section>
 
+  <footer>
+    <p>© 2025 Your Website</p>
+  </footer>
+
+  
+
+  <script>
+
+    const searchInput = document.getElementById("searchInput");
+    const searchBtn = document.getElementById("searchBtn");
+    const clearBtn = document.getElementById("clearBtn");
+    const searchResult = document.getElementById("searchResult");
+
+    // Search function
+    searchBtn.addEventListener("click", function() {
+      const searchTerm = searchInput.value.trim();
+      
+      // if (searchTerm) {
+      //   // Lookup data from Firebase
+      //   const dbRef = database.ref("your_data_path");
+      //   dbRef.orderByChild("name").equalTo(searchTerm).once("value", function(snapshot) {
+      //     if (snapshot.exists()) {
+      //       const results = snapshot.val();
+      //       let resultText = "";
+      //       for (const key in results) {
+      //         resultText += `<p>${results[key].name}: ${results[key].description}</p>`;
+      //       }
+      //       searchResult.innerHTML = resultText;
+      //     } else {
+      //       searchResult.innerHTML = "<p>No results found.</p>";
+      //     }
+      //   });
+      // } else {
+      //   searchResult.innerHTML = "<p>Please enter a search term.</p>";
+      // }
+    });
+
+    // Clear function
+    clearBtn.addEventListener("click", function() {
+      searchInput.value = "";
+      searchResult.innerHTML = "";
+    });
+  </script>
 
   <script type="module">
-  // Import the functions you need from the SDKs you need
     import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
     import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
     // TODO: Add SDKs for Firebase products that you want to use
@@ -109,477 +151,6 @@
     // Initialize Firebase
     const app = initializeApp(firebaseConfig);
     const db = getFirestore(app);
-    const employee = [
-          {
-            "Name": "Wipaporn",
-            "NickName": "Tangsaksomwang",
-            "Target": "Chutima Sukkasem (Chompoo)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Saran",
-            "NickName": "Jantara-amornporn",
-            "Target": "Patcharaporn Kheawsuwan (Aom)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Suthichote",
-            "NickName": "Jirapongsakul",
-            "Target": "Patsakorn Janthawong (Mark)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Nattamon",
-            "NickName": "Sridam",
-            "Target": "Kullasatree Sawong (Aew)  Team: Paotang Core (BA)"
-          },
-          {
-            "Name": "Phubet",
-            "NickName": "Rujirekanusorn",
-            "Target": "Nathorn Pothong (Imm)  Team: Paotang Pay (BA)"
-          },
-          {
-            "Name": "Warunee",
-            "NickName": "Khammak",
-            "Target": "Keawwisadpong Sanguanwong (Pond)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Pattaranit",
-            "NickName": "Keeratiyuttapaisal",
-            "Target": "Puthiwat Patrarchrawanich (Mac)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Anuradee",
-            "NickName": "Bundasak",
-            "Target": "Nattamon Sridam (Fern)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "krittayanee",
-            "NickName": "thummaraj",
-            "Target": "Kamonnate Wongpramote (Gift)  Team: Paotang Core (BA)"
-          },
-          {
-            "Name": "Teerapol",
-            "NickName": "Sanghangrattana",
-            "Target": "Pattaranit Keeratiyuttapaisal (Natt)  Team: Paotang Core (BA)"
-          },
-          {
-            "Name": "Krissananan",
-            "NickName": "Tanwan",
-            "Target": "Nattapong Jantarasorn (Mix)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Ratchanee",
-            "NickName": "Ketsiri",
-            "Target": "Thanathip Kumnarai (Book)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Khanittha",
-            "NickName": "Chaipattanadecha",
-            "Target": "Wannasit Chaiphinan (P'Wan)  Team: Paotang,VB (Senior Director)"
-          },
-          {
-            "Name": "Suppachai",
-            "NickName": "Neeranit",
-            "Target": "Tevarit Subjit (Nook)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Thidanan",
-            "NickName": "Chanhor",
-            "Target": "Sorakai Kongdee (Nu)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Sorakai",
-            "NickName": "Kongdee",
-            "Target": "Kittikun Sonprom (Arm)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Pattaraphorn",
-            "NickName": "Sajjachaiyanont",
-            "Target": "Khanittha Chaipattanadecha (Tha)  Team: Paotang Core (BA)"
-          },
-          {
-            "Name": "Chayana",
-            "NickName": "Sirijarusvong",
-            "Target": "Chanothai Duangrawa (Ball)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Benjamaporn",
-            "NickName": "Ratchakrut",
-            "Target": "Juthamas Katkwan (Tangkwa)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Supaluck",
-            "NickName": "Asawinulankul",
-            "Target": "Benjamaporn Ratchakrut (Benny)  Team: Paotang Pay (SQ Lead)"
-          },
-          {
-            "Name": "Phapawarin",
-            "NickName": "Phommas",
-            "Target": "Ubonwan raksasat (nui)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Nathorn",
-            "NickName": "Pothong",
-            "Target": "Wipaporn Tangsaksomwang (MuiAng)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Kittipop",
-            "NickName": "Limpaiboon",
-            "Target": "Nitiwat Apaikawee (Fluke)  Team: G Wallet (Back-end)"
-          },
-          {
-            "Name": "Kittikun",
-            "NickName": "Sonprom",
-            "Target": "Kittipop Limpaiboon (Boom)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Keawwisadpong",
-            "NickName": "Sanguanwong",
-            "Target": "Krissananan Tanwan (Bom)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Puthiwat",
-            "NickName": "Patrarchrawanich",
-            "Target": "Suppachai Neeranit (M)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Sayamon",
-            "NickName": "Sittiprom",
-            "Target": "Ratchanee Ketsiri (MEAW)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Anutida",
-            "NickName": "Arun",
-            "Target": "Warunee Khammak (Wa)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Prakan",
-            "NickName": "Kerdclai",
-            "Target": "Natthaphon Phanit (Bom)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Nattanai",
-            "NickName": "Teerakanon",
-            "Target": "Ruchuta Nundhapana (Beau)  Team: Paotang Core (Director)"
-          },
-          {
-            "Name": "Patcharaporn",
-            "NickName": "Kheawsuwan",
-            "Target": "Asada Pisuttipong (Art)  Team: Paotang Core (SQ Lead)"
-          },
-          {
-            "Name": "Chutima",
-            "NickName": "Sukkasem",
-            "Target": "Suthichote Jirapongsakul (Chote)  Team: Paotang Core (SQ Lead)"
-          },
-          {
-            "Name": "Nattapong",
-            "NickName": "Jantarasorn",
-            "Target": "Anuradee Bundasak (Meemee)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Aphinat",
-            "NickName": "Hlongkaow",
-            "Target": "Supaluck Asawinulankul (Jab)  Team: Paotang Pay (Back-end)"
-          },
-          {
-            "Name": "Samittra",
-            "NickName": "Jengprasert",
-            "Target": "Prakan Kerdclai (Nueng)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Saowanee",
-            "NickName": "Thammanawan",
-            "Target": "Anuchat Buntherng (Namnueng)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Kullasatree",
-            "NickName": "Sawong",
-            "Target": "Saran Jantara-amornporn (Pom)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Asada",
-            "NickName": "Pisuttipong",
-            "Target": "Tossapon Prasatklang (Topz)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Anuruk",
-            "NickName": "Rodprom",
-            "Target": "Teerapol Sanghangrattana (Pol)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Ruchuta",
-            "NickName": "Nundhapana",
-            "Target": "Satsawat Rodketkul (Mango)  Team: Paotang Pay (Back-end)"
-          },
-          {
-            "Name": "Panjapong",
-            "NickName": "Kongsut",
-            "Target": "Thanakit Yupanan (Babe)  Team: G Wallet (Back-end)"
-          },
-          {
-            "Name": "Wannasit",
-            "NickName": "Chaiphinan",
-            "Target": "Nattanai Teerakanon (Pao)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Ratchakrid",
-            "NickName": "Somboonsuk",
-            "Target": "Nantawan Khantajak (Aye)  Team: G Wallet (Tester)"
-          },
-          {
-            "Name": "Tevarit",
-            "NickName": "Subjit",
-            "Target": "Panjapong Kongsut (Phai)  Team: Paotang Core (Platform SQ Lead)"
-          },
-          {
-            "Name": "Patsakorn",
-            "NickName": "Janthawong",
-            "Target": "Metaras Charoenseang (May)  Team: Paotang Pay (Back-end)"
-          },
-          {
-            "Name": "Kochapol",
-            "NickName": "Reekhuprit",
-            "Target": "Chayana Sirijarusvong (Peem)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Chanakan",
-            "NickName": "Jumnongwit",
-            "Target": "Warich Pakbara (Sal)  Team: Paotang Pay (Tester)"
-          },
-          {
-            "Name": "Thorntanes",
-            "NickName": "U-Thai",
-            "Target": "Nutcha Sriakkachan (Nutch)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Nuttapong",
-            "NickName": "Chueawoolim",
-            "Target": "Anutida  Arun (Grand)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Thananut",
-            "NickName": "Jariyasatit",
-            "Target": "Samittra Jengprasert (TA)  Team: VB (Tester)"
-          },
-          {
-            "Name": "Metaras",
-            "NickName": "Charoenseang",
-            "Target": "Chanakan Jumnongwit (Gun)  Team: G Wallet (Front-end)"
-          },
-          {
-            "Name": "Natthaphon",
-            "NickName": "Phanit",
-            "Target": "Nuttapong Chueawoolim (Nut)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Phakkharachate",
-            "NickName": "Jonganurak",
-            "Target": "Saowanee Thammanawan (Annie)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Nutcha",
-            "NickName": "Sriakkachan",
-            "Target": "Kochapol Reekhuprit (MAX)  Team: Paotang Pay (Tester)"
-          },
-          {
-            "Name": "Juthamas",
-            "NickName": "Katkwan",
-            "Target": "Songkeit Klinnimnaul (Dollar)  Team: G Wallet (Front-end)"
-          },
-          {
-            "Name": "Tossapon",
-            "NickName": "Prasatklang",
-            "Target": "Phakkharachate Jonganurak (Jojoe)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Wannida",
-            "NickName": "Pojjaroenanant",
-            "Target": "Pattaraporn Punya (Nutty)  Team: G Wallet (Front-end)"
-          },
-          {
-            "Name": "Natdanai",
-            "NickName": "Tongsub",
-            "Target": "thanatphimon sutthawongsakun (ingfah)  Team: Paotang Pay (Tester)"
-          },
-          {
-            "Name": "Anuchat",
-            "NickName": "Buntherng",
-            "Target": "Ratchakrid Somboonsuk (Mek)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Kamonnate",
-            "NickName": "Wongpramote",
-            "Target": "Sayamon Sittiprom (bow)  Team: Paotang Pay (Back-end)"
-          },
-          {
-            "Name": "Warich",
-            "NickName": "Pakbara",
-            "Target": "Pattaraphorn Sajjachaiyanont (Mickey)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "Thanakit",
-            "NickName": "Yupanan",
-            "Target": "Aphinat Hlongkaow (To)  Team: Paotang Core (Tester)"
-          },
-          {
-            "Name": "thanatphimon",
-            "NickName": "sutthawongsakun",
-            "Target": "Thananut Jariyasatit (Khing)  Team: G Wallet (Front-end)"
-          },
-          {
-            "Name": "Krissana",
-            "NickName": "Thephatsadin Na Ayuthaya",
-            "Target": "Natdanai Tongsub (Bonus)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Ubonwan",
-            "NickName": "raksasat",
-            "Target": "Anuruk Rodprom (Best)  Team: Paotang Core (SQ Lead)"
-          },
-          {
-            "Name": "Songkeit",
-            "NickName": "Klinnimnaul",
-            "Target": "Khanitta Seethonsud (Sai)  Team: Paotang Pay (Tester)"
-          },
-          {
-            "Name": "Pattaraporn",
-            "NickName": "Punya",
-            "Target": "Phapawarin Phommas (EVE)  Team: Paotang Pay (BA)"
-          },
-          {
-            "Name": "Chanothai",
-            "NickName": "Duangrawa",
-            "Target": "Thidanan Chanhor (Davin)  Team: Paotang Core (BA)"
-          },
-          {
-            "Name": "Teerapong",
-            "NickName": "Boonkwan",
-            "Target": "Phubet Rujirekanusorn (Mhee)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Nantawan",
-            "NickName": "Khantajak",
-            "Target": "Thorntanes U-Thai (Pun)  Team: G Wallet (BA)"
-          },
-          {
-            "Name": "Khanitta",
-            "NickName": "Seethonsud",
-            "Target": "Teerapong Boonkwan (Jay)  Team: Paotang Pay (Front-end)"
-          },
-          {
-            "Name": "Satsawat",
-            "NickName": "Rodketkul",
-            "Target": "krittayanee thummaraj (jah)  Team: Paotang Core (Back-end)"
-          },
-          {
-            "Name": "Thanathip",
-            "NickName": "Kumnarai",
-            "Target": "Wannida Pojjaroenanant (น้ำผึ้ง)  Team: Paotang Core (Front-end)"
-          },
-          {
-            "Name": "Nitiwat",
-            "NickName": "Apaikawee",
-            "Target": "Krissana Thephatsadin Na Ayuthaya (Crok)  Team: G Wallet (SQ Lead)"
-          }
-        ]
-
-
-    async function addData() {
-      employee.forEach( obj => {
-        add(obj.Name, obj.NickName, obj.Target)
-      })
-    }
-
-    async function add(name,nickname,target) {
-      try {
-        const docRef = await addDoc(collection(db, "randomGift"), {
-          Name: name,
-          Nickname: nickname,
-          Target: target
-        });
-        console.log("Document written with ID: ", docRef.id);
-      } catch (e) {
-        console.error("Error adding document: ", e);
-      }
-    }
-
-    window.addData = addData
-  </script>
-
-  <!-- <script>
-    const firebaseConfig = {
-      apiKey: "AIzaSyB_pagwAmE5zuBGRUWM3mwDwi-s_lvcvyE",
-      authDomain: "whattodo-60690.firebaseapp.com",
-      databaseURL: "https://whattodo-60690.firebaseio.com",
-      projectId: "whattodo-60690",
-      storageBucket: "whattodo-60690.firebasestorage.app",
-      messagingSenderId: "1080705771713",
-      appId: "1:1080705771713:web:531944af103b0b7f974c40"
-    };
-
-    const app = firebase.initializeApp(firebaseConfig);
-    const db = firebase.firestore();
-
-    
-  </script> -->
-
-  <script>
-
-    
-    
-
-    // Login function
-    function login() {
-      const userId = document.getElementById("userId").value;
-      if (!userId) {
-        alert("Please enter your unique ID");
-        return;
-      }
-      localStorage.setItem("userId", userId);
-
-      if (mockData[userId]) {
-        showSection("detailSection");
-        document.getElementById("pairDetail").innerText = `You are buying a gift for: ${mockData[userId].pair}`;
-      } else {
-        alert("No pair found for this ID");
-        showSection("loginSection");
-      }
-    }
-
-    // Show a specific section
-    function showSection(sectionId) {
-      document.getElementById("loginSection").classList.add("hidden");
-      document.getElementById("detailSection").classList.add("hidden");
-      document.getElementById("overallSection").classList.add("hidden");
-
-      document.getElementById(sectionId).classList.remove("hidden");
-
-      if (sectionId === "overallSection") loadOverallTable();
-    }
-
-    // Load overall table data
-    function loadOverallTable() {
-      const tableBody = document.getElementById("overallTable");
-      tableBody.innerHTML = ""; // Clear existing rows
-      Object.values(mockData).forEach((item) => {
-        const row = `<tr><td>${item.name}</td><td>${item.pair}</td></tr>`;
-        tableBody.innerHTML += row;
-      });
-    }
-
-    // Logout function
-    function logout() {
-      localStorage.removeItem("userId");
-      showSection("loginSection");
-    }
-
-    // Auto login if user is already logged in
-    const savedUserId = localStorage.getItem("userId");
-    if (savedUserId && mockData[savedUserId]) {
-      showSection("detailSection");
-      document.getElementById("pairDetail").innerText = `You are buying a gift for: ${mockData[savedUserId].pair}`;
-    } else {
-      showSection("loginSection");
-    }
   </script>
 </body>
 </html>
