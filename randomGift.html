@@ -4,9 +4,6 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Search Website</title>
-  <!-- Firebase CDN -->
-  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-app.js"></script>
-  <script src="https://www.gstatic.com/firebasejs/9.1.3/firebase-database.js"></script>
   <style>
     /* Basic Styling */
     * {
@@ -16,15 +13,16 @@
     }
 
     body {
-      font-family: Arial, sans-serif;
+      font-family: "Roboto", Arial, sans-serif;
       line-height: 1.6;
       height: 100vh;
       display: flex;
       justify-content: center;
       align-items: center;
-      background-image: url('https://via.placeholder.com/1500'); /* Replace with your desired background image */
-      background-size: cover;
-      background-position: center;
+      overflow: hidden;
+      background: linear-gradient(120deg, #f9fcfd, #ffffff);
+  background-size: cover;
+  background-position: center;
     }
 
     header {
@@ -32,8 +30,20 @@
       margin-bottom: 20px;
     }
 
+    .container-wrapper {
+      display: flex;
+      flex-direction: column;  /* Stack the containers vertically */
+      gap: 20px;  /* Add space between the containers */
+      width: 90%;
+      max-width: 600px;
+      padding: 20px;
+      background-color: #fff;
+      align-items: center;
+    }
+
     .container {
-      width: 400px;
+      max-width: 600px;
+      width: 100%;
       background-color: rgba(255, 255, 255, 0.8); /* White background with transparency */
       padding: 30px;
       border-radius: 15px;
@@ -43,8 +53,22 @@
 
     h1 {
       font-size: 24px;
-      margin-bottom: 20px;
+      margin-bottom: 8px;
       text-align: center;
+      color: #212121;
+    }
+
+    h3 {
+      font-size: 18px;
+      text-align: center;
+      color: #212121;
+    }
+
+    p {
+      font-size: 18px;
+      margin-bottom: 16px;
+      text-align: center;
+      color: #838383;
     }
 
     input[type="text"] {
@@ -59,8 +83,8 @@
     button {
       padding: 10px 15px;
       margin: 5px;
-      width: 100%;
-      background-color: #333;
+      width: 50%;
+      background: linear-gradient(90deg, #2b77ff, #2b77ff);
       color: white;
       border: none;
       border-radius: 5px;
@@ -70,6 +94,14 @@
 
     button:hover {
       background-color: #555;
+    }
+
+    #searchLoading {
+      margin-top: 20px;
+      padding: 10px;
+      background-color: #f4f4f4;
+      border-radius: 5px;
+      word-wrap: break-word;
     }
 
     #searchResult {
@@ -85,86 +117,231 @@
       margin-top: 20px;
       color: #fff;
     }
+
+    .skeleton {
+      display: inline-block;
+      background-color: #e0e0e0;
+      border-radius: 4px;
+      width: 100%;
+      height: 20px;
+      animation: loading 1.5s infinite ease-in-out;
+    }
+
+    @keyframes loading {
+      0% {
+        background-color: #e0e0e0;
+      }
+      50% {
+        background-color: #c0c0c0;
+      }
+      100% {
+        background-color: #e0e0e0;
+      }
+    }
+
+
+    .title-container {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to bottom right, #03a8ea, #00a6e6); ;
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      color: white;
+    }
+
+    /* Main title styling */
+    .main-title {
+      font-size: 50px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 4px rgb(59, 45, 45);
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    /* Subheading styling */
+    .subheading {
+      font-size: 24px;
+      font-style: italic;
+      letter-spacing: 2px;
+      margin-top: 0;
+      font-family: 'Arial', sans-serif;
+      color: white;
+    }
+
+    /* Hover effect */
+    .main-title:hover {
+      transform: scale(1.1);
+      color: #ffffff;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .subheading:hover {
+      color: #ffffff;
+      transition: color 0.3s ease;
+    }
+
+    /* Animating the title with keyframes */
+    @keyframes title-animation {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-title {
+      animation: title-animation 1s ease-out;
+    }
+
+    .button-container {
+      display: flex;             /* Arrange buttons horizontally */
+      gap: 20px;                 /* Space between buttons */
+    }
+
   </style>
 </head>
 <body>
-  <div class="container">
-    <header>
-      <h1>Search Data from Firebase</h1>
-    </header>
-    
-    <!-- Search Section -->
-    <input type="text" id="searchInput" placeholder="Enter search term..." />
-    <button id="searchBtn">Search</button>
-    <button id="clearBtn">Clear</button>
 
-    <h3>Search Result:</h3>
-    <div id="searchResult"></div>
+  <div class="container-wrapper">
+    <div class="title-container">
+      <h1 class="main-title">Paotang New Year Party</h1>
+      <p class="subheading">Let's Celebrate Together!</p>
+    </div>
+  
+    <div class="container">
+      <header>
+        <h1>Enter your name to check</h1>
+      </header>
+      
+      <!-- Search Section -->
+      <input type="text" id="searchInput" placeholder="Enter search term..." />
+      <div class="button-container">
+      <button id="searchBtn">Search</button>
+      <button id="clearBtn">Clear</button></div>
+  
+      
+      <div hidden id="searchLoading">
+        <h3>Result</h3>
+        <div id="skeleton" class="skeleton"></div>
+      <div id="skeleton2" class="skeleton" style="width: 60%; margin-top: 10px;"></div>
+      <div id="skeleton3" class="skeleton" style="width: 80%; margin-top: 10px;"></div>
+      
+      </div>
+  
+      <div hidden id="searchResult">
+      </div>
+    </div>
   </div>
+  
 
-  <footer>
-    <p>© 2025 Your Website</p>
-  </footer>
+  <script type="module">
 
-  <script>
 
-    // DOM elements
     const searchInput = document.getElementById("searchInput");
     const searchBtn = document.getElementById("searchBtn");
     const clearBtn = document.getElementById("clearBtn");
     const searchResult = document.getElementById("searchResult");
+    const searchLoading = document.getElementById("searchLoading")
+
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
+    import { getFirestore, collection, query, where, getDocs } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
+    // TODO: Add SDKs for Firebase products that you want to use
+    // https://firebase.google.com/docs/web/setup#available-libraries
+  
+    // Your web app's Firebase configuration
+    const firebaseConfig = {
+      apiKey: "AIzaSyB_pagwAmE5zuBGRUWM3mwDwi-s_lvcvyE",
+      authDomain: "whattodo-60690.firebaseapp.com",
+      databaseURL: "https://whattodo-60690.firebaseio.com",
+      projectId: "whattodo-60690",
+      storageBucket: "whattodo-60690.firebasestorage.app",
+      messagingSenderId: "1080705771713",
+      appId: "1:1080705771713:web:531944af103b0b7f974c40"
+    };
+  
+    // Initialize Firebase
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+    const ref = collection(db, "randomGift")
+    
+
+    var userList = [];
+    // const dbRef = ref(db, "randomGift");
+  
+    async function searchValue(keyword) {
+        const searchTerm = keyword;
+        if (searchTerm) {
+          const q = query(ref, where("Name", "==", searchTerm))
+          const snapshot = await getDocs(q)
+          userList = snapshot.docs.map(doc => doc.data())
+          console.log(userList)
+          searchResult.hidden = false
+          searchLoading.hidden = true
+          var result = userList[0].Target
+          var replace = result.replace("Team", "<BR>Team")
+          searchResult.innerHTML = "<p> Your target is <BR>"+replace+"</p>"
+        } else {
+          searchResult.innerHTML = "<p>Please enter a search term.</p>";
+        }
+      }
+
+      // window.searchValue = function(keyword) {
+      //   const searchTerm = keyword;
+        
+      //   if (searchTerm) {
+      //     // Lookup data from Firebase
+          
+      //     dbRef.orderByChild("Name").equalTo(searchTerm).once("value", function(snapshot) {
+      //       if (snapshot.exists()) {
+      //         const results = snapshot.val();
+      //         console.log(results);
+      //         // let resultText = "";
+      //         // for (const key in results) {
+      //         //   resultText += `<p>${results[key].name}: ${results[key].description}</p>`;
+      //         // }
+      //         // searchResult.innerHTML = resultText;
+      //       } else {
+      //         searchResult.innerHTML = "<p>No results found.</p>";
+      //       }
+      //     });
+      //   } else {
+      //     searchResult.innerHTML = "<p>Please enter a search term.</p>";
+      //   }
+      // }
+ 
+
+    // DOM elements
+    
 
     // Search function
     searchBtn.addEventListener("click", function() {
       const searchTerm = searchInput.value.trim();
       
-      // if (searchTerm) {
-      //   // Lookup data from Firebase
-      //   const dbRef = database.ref("your_data_path");
-      //   dbRef.orderByChild("name").equalTo(searchTerm).once("value", function(snapshot) {
-      //     if (snapshot.exists()) {
-      //       const results = snapshot.val();
-      //       let resultText = "";
-      //       for (const key in results) {
-      //         resultText += `<p>${results[key].name}: ${results[key].description}</p>`;
-      //       }
-      //       searchResult.innerHTML = resultText;
-      //     } else {
-      //       searchResult.innerHTML = "<p>No results found.</p>";
-      //     }
-      //   });
-      // } else {
-      //   searchResult.innerHTML = "<p>Please enter a search term.</p>";
-      // }
+      if (searchTerm) {
+        searchResult.hidden = true
+        searchLoading.hidden = false
+        searchValue(searchTerm)
+      } else {
+        searchResult.innerHTML = "<p>Please enter a search term.</p>";
+      }
     });
 
     // Clear function
     clearBtn.addEventListener("click", function() {
       searchInput.value = "";
       searchResult.innerHTML = "";
+      searchLoading.hidden = true;
+      searchResult.hidden = true
     });
   </script>
 
-<script type="module">
-  import { initializeApp } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-app.js";
-  import { getFirestore, collection, addDoc } from "https://www.gstatic.com/firebasejs/11.1.0/firebase-firestore.js";
-  // TODO: Add SDKs for Firebase products that you want to use
-  // https://firebase.google.com/docs/web/setup#available-libraries
 
-  // Your web app's Firebase configuration
-  const firebaseConfig = {
-    apiKey: "AIzaSyB_pagwAmE5zuBGRUWM3mwDwi-s_lvcvyE",
-    authDomain: "whattodo-60690.firebaseapp.com",
-    databaseURL: "https://whattodo-60690.firebaseio.com",
-    projectId: "whattodo-60690",
-    storageBucket: "whattodo-60690.firebasestorage.app",
-    messagingSenderId: "1080705771713",
-    appId: "1:1080705771713:web:531944af103b0b7f974c40"
-  };
-
-  // Initialize Firebase
-  const app = initializeApp(firebaseConfig);
-  const db = getFirestore(app);
-</script>
 </body>
 </html>

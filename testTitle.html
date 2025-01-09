@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Paotang New Year Party</title>
+  <style>
+    /* Global styles */
+    body {
+      font-family: 'Arial', sans-serif;
+      background: #f7f7f7;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      margin: 0;
+    }
+
+    /* Title container */
+    .title-container {
+      text-align: center;
+      padding: 20px;
+      background: linear-gradient(to right, #ff7e5f, #feb47b);
+      border-radius: 12px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
+      max-width: 600px;
+      width: 100%;
+      color: white;
+    }
+
+    /* Main title styling */
+    .main-title {
+      font-size: 50px;
+      font-weight: bold;
+      letter-spacing: 3px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+      margin-bottom: 10px;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Subheading styling */
+    .subheading {
+      font-size: 24px;
+      font-style: italic;
+      letter-spacing: 2px;
+      margin-top: 0;
+      font-family: 'Arial', sans-serif;
+    }
+
+    /* Hover effect */
+    .main-title:hover {
+      transform: scale(1.1);
+      color: #ffeb3b;
+      transition: transform 0.3s ease, color 0.3s ease;
+    }
+
+    .subheading:hover {
+      color: #ffd54f;
+      transition: color 0.3s ease;
+    }
+
+    /* Animating the title with keyframes */
+    @keyframes title-animation {
+      0% {
+        opacity: 0;
+        transform: translateY(30px);
+      }
+      100% {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .main-title {
+      animation: title-animation 1s ease-out;
+    }
+  </style>
+</head>
+<body>
+
+  <div class="title-container">
+    <h1 class="main-title">Paotang New Year Party</h1>
+    <p class="subheading">Let's Celebrate Together in Style!</p>
+  </div>
+
+</body>
+</html>
