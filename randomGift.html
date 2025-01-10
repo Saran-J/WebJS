@@ -297,11 +297,17 @@
 
     var userList = [];
     // const dbRef = ref(db, "randomGift");
+
+    function capitalizeFirstChar(str) {
+      if (!str) return ''; // Handle empty strings
+      return str.charAt(0).toUpperCase() + str.slice(1);
+    }
   
     async function searchValue(keyword) {
         const searchTerm = keyword;
         if (searchTerm) {
-          const q = query(ref, where("Name", "==", searchTerm))
+          var searchKey = capitalizeFirstChar(searchTerm)
+          const q = query(ref, where("Name", "==", searchKey))
           const snapshot = await getDocs(q)
           userList = snapshot.docs.map(doc => doc.data())
           console.log(userList)
